@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const path = require('path');
 
@@ -20,12 +21,31 @@ const common_config = {
   }
 };
 
+const hot_module_config = {
+  devServer: {
+    contentBase: PATHS.build,
+
+    historyApiFallback: true,
+    hot: true,
+    inline: true,
+    progress: true,
+
+    stats: 'errors-only',
+
+    host: process.env.HOST,
+    port: process.env.PORT
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
+};
+
 switch (NODE_ENV) {
 case 'build':
   module.exports = merge(common_config, {});
   break;
 case 'start':
 default:
-  module.exports = merge(common_config, {});
+  module.exports = merge(common_config, hot_module_config);
   break;
 }
