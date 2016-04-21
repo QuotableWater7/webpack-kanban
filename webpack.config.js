@@ -5,6 +5,7 @@ const path = require('path');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
 const NODE_ENV = process.env.npm_lifecycle_event;
+process.env.BABEL_ENV = NODE_ENV;
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
