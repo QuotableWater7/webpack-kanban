@@ -7,6 +7,7 @@ import uuid from 'node-uuid';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    this.addNote.bind(this);
 
     this.state = {
       notes: [
@@ -28,11 +29,23 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <ul>
-        {this.state.notes.map(note =>
-          <Note {...note}/>
-        )}
-      </ul>
+      <div>
+        <button onClick={this.addNote.bind(this)}>+</button>
+        <ul>
+          {this.state.notes.map(note =>
+            <Note {...note} key={note.id}/>
+          )}
+        </ul>
+      </div>
     );
+  }
+
+  addNote() {
+    this.setState({
+      notes: this.state.notes.concat([{
+        id: uuid.v4(),
+        task: 'whatevs'
+      }])
+    });
   }
 }
